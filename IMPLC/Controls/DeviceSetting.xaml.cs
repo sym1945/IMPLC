@@ -1,6 +1,4 @@
-﻿using IMPLC.Core;
-using IMPLC.Service;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,21 +16,13 @@ using System.Windows.Shapes;
 namespace IMPLC
 {
     /// <summary>
-    /// MainWindow.xaml에 대한 상호 작용 논리
+    /// DeviceSetting.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DeviceSetting : UserControl
     {
-        public MainWindow()
+        public DeviceSetting()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            var DeviceRepo = DeviceRepoManager.Instance;
-            DeviceRepo.AddDeviceBlock(eDevice.W, 10);
-        }
-
     }
 }

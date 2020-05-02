@@ -5,14 +5,108 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMPLC"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        d:DataContext="{d:DesignInstance local:ServiceViewModel}"
+        ResizeMode="NoResize"
+        Title="IMPLC" 
+        Height="600" 
+        Width="400">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-        <Button Grid.Column="0" Click="Start_Click">START</Button>
-        <Button Grid.Column="1" Click="Stop_Click">STOP</Button>
+        <!-- Menu bar -->
+        <Border Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Device Setting"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Service Setting -->
+        <GroupBox 
+            Grid.Row="1"
+            Padding="10"
+            Margin="10"
+            DataContext="{Binding ServiceViewModel}">
+            <GroupBox.Header>
+                <TextBlock Text="Service"/>
+            </GroupBox.Header>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <!-- Service Type And Root Uri -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="7*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Text="Service Type"/>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Text="Root URI"/>
+
+                    <ComboBox
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        ItemsSource="{Binding ServiceTypes}"
+                        SelectedItem="{Binding SelectedServiceType}">
+                    </ComboBox>
+
+                    <TextBox 
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Text="{Binding RootUri}"/>
+                </Grid>
+
+                <!-- Button -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button
+                        Grid.Column="0"
+                        Content="START"
+                        Command="{Binding StartCommand}"
+                        />
+
+                    <Button 
+                        Grid.Column="1"
+                        Content="STOP"
+                        Command="{Binding StopCommand}"
+                        />
+                </Grid>
+            </Grid>
+        </GroupBox>
+        
+        <!-- Log -->
+        <GroupBox 
+            Grid.Row="2"
+            Padding="10"
+            Margin="10">
+            <GroupBox.Header>
+                <TextBlock Text="Log"/>
+            </GroupBox.Header>
+            
+            <local:LogViewer />
+            
+        </GroupBox>
     </Grid>
 </Window>

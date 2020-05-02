@@ -18,16 +18,22 @@ namespace IMPLC.Core
             _Devices = new Dictionary<eDevice, IDeviceRepo>();
         }
 
-        public void AddDeviceBlock(eDevice device, short length)
-        {
-            if (!_Devices.ContainsKey(device))
-                _Devices.Add(device, DeviceRepoFactory.MakeDeviceRepo(device, length));
-        }
-
-        public void RemoveDeviceBlock(eDevice device)
+        public bool AddDeviceBlock(eDevice device, short length)
         {
             if (_Devices.ContainsKey(device))
-                _Devices.Remove(device);
+                return false;
+
+            _Devices.Add(device, DeviceRepoFactory.MakeDeviceRepo(device, length));
+
+            return false;
+        }
+
+        public bool RemoveDeviceBlock(eDevice device)
+        {
+            if (!_Devices.ContainsKey(device))
+                return false;
+                
+            return _Devices.Remove(device);
         }
 
         public ErrorCode ReadDeviceBlock(eDevice device, short address, short length, out short[] readValues)
