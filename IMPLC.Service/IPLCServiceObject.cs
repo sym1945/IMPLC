@@ -8,10 +8,10 @@ namespace IMPLC.Service
 
         short Close();
 
-        short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf);
+        short WriteBlock(short device, short deviceNo, short size, ref short[] buf);
 
-        short BlockRead(eDevice device, short deviceNo, short size, ref short[] buf);
+        short ReadBlock(short device, short deviceNo, short size, ref short[] buf);
 
-        short SetBit(eDevice device, short devno, bool set);
+        short SetBit(short device, short devno, bool set);
     }
 }

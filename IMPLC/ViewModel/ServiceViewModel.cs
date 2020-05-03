@@ -67,13 +67,12 @@ namespace IMPLC
                     }
 
                     _Service = PLCServiceProvider.GetService(SelectedServiceType);
-                    var uri = ServiceUri;
-                    var result = _Service.Start(uri);
+                    var result = _Service.Start(RootUri);
                     IsRunning = result;
                     if (_IsRunning == false)
                         _Service = null;
 
-                    _Logger.AddLog($"{uri} IMPLC Service {(result ? "Start!" : "Start Fail!!")}");
+                    _Logger.AddLog($"{ServiceUri} IMPLC Service {(result ? "Start!" : "Start Fail!!")}");
                 }
             });
         }

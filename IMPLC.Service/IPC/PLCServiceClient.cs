@@ -25,7 +25,7 @@ namespace IMPLC.Service.IPC
 
                 return serviceObject;
             }
-            catch
+            catch(System.Exception ex)
             {
                 return null;
             }

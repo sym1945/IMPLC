@@ -21,19 +21,19 @@ namespace IMPLC.Service.IPC
             return 0;
         }
 
-        public short BlockWrite(eDevice device, short deviceNo, short size, ref short[] buf)
+        public short WriteBlock(short device, short deviceNo, short size, ref short[] buf)
         {
-            return (short)_DeviceRepo.WriteDeviceBlock(device, deviceNo, size, ref buf);
+            return (short)_DeviceRepo.WriteDeviceBlock((eDevice)device, deviceNo, size, ref buf);
         }
 
-        public short BlockRead(eDevice device, short deviceNo, short size, ref short[] buf)
+        public short ReadBlock(short device, short deviceNo, short size, ref short[] buf)
         {
-            return (short)_DeviceRepo.ReadDeviceBlock(device, deviceNo, size, out buf);
+            return (short)_DeviceRepo.ReadDeviceBlock((eDevice)device, deviceNo, size, out buf);
         }
 
-        public short SetBit(eDevice device, short devno, bool set)
+        public short SetBit(short device, short devno, bool set)
         {
-            return (short)_DeviceRepo.WriteBit(device, devno, set);
+            return (short)_DeviceRepo.WriteBit((eDevice)device, devno, set);
         }
     }
 }

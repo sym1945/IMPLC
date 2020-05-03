@@ -16,9 +16,9 @@ namespace IMPLC.Test
             var writeValue = new short[] { 1 };
             var readValue = new short[1];
 
-            serviceObject.BlockWrite(eDevice.W, 0, (short)writeValue.Length, ref writeValue);
+            serviceObject.WriteBlock((short)eDevice.W, 0, (short)writeValue.Length, ref writeValue);
 
-            serviceObject.BlockRead(eDevice.W, 0, (short)readValue.Length, ref readValue);
+            serviceObject.ReadBlock((short)eDevice.W, 0, (short)readValue.Length, ref readValue);
 
             Assert.AreEqual(1, readValue[0]);
 
