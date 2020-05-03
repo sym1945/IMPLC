@@ -1,7 +1,5 @@
-﻿using System;
-using IMPLC.Core;
+﻿using IMPLC.Core;
 using IMPLC.Service;
-using IMPLC.Service.IPC;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IMPLC.Test

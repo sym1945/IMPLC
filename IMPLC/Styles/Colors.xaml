@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:IMPLC">
+
+    <Color x:Key="ForegroundRegular">#000000</Color>
+    <SolidColorBrush x:Key="IconBrush" Color="{StaticResource ForegroundRegular}"/>
+
+    <Color x:Key="BackgroundRegular">#ffffff</Color>
+    <SolidColorBrush x:Key="ButtonBackgrounBrush" Color="{StaticResource BackgroundRegular}"/>
+
+    <Color x:Key="BackgroundLight">#dfdfdf</Color>
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource BackgroundLight}"/>
+
+    <Color x:Key="BackgroundVeryLightBlue">#e0ecff</Color>
+    <SolidColorBrush x:Key="ButtonMouseOverBrush" Color="{StaticResource BackgroundVeryLightBlue}"/>
+
+
+</ResourceDictionary>

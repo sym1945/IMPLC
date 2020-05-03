@@ -9,6 +9,7 @@ namespace IMPLC
     {
         private readonly LogViewModel _Logger = LogViewModel.Instance;
 
+        private bool _IsRunning;
         private IPLCService _Service;
         private CommandBase _StartCommand;
         private CommandBase _StopCommand;
@@ -29,7 +30,20 @@ namespace IMPLC
 
         
 
-        public bool IsRunning { get; private set; }
+        public bool IsRunning 
+        {
+            get => _IsRunning;
+            private set
+            {
+                if (_IsRunning == value)
+                    return;
+
+                _IsRunning = value;
+
+                _StartCommand.OnCanExecuteChanged();
+                _StopCommand.OnCanExecuteChanged();
+            }
+        }
 
         public string RootUri { get; set; }
 
@@ -41,12 +55,12 @@ namespace IMPLC
             {
                 CanExecuteFunction = (param) => 
                 {
-                    return !IsRunning;
+                    return !_IsRunning;
                 },
 
                 ExecuteAction = (param) => 
                 {
-                    if (_Service != null || IsRunning)
+                    if (_Service != null || _IsRunning)
                     {
                         _Logger.AddLog("Service is already Started");
                         return;
@@ -56,7 +70,8 @@ namespace IMPLC
                     var uri = ServiceUri;
                     var result = _Service.Start(uri);
                     IsRunning = result;
-                    OnServiceRunningChanged();
+                    if (_IsRunning == false)
+                        _Service = null;
 
                     _Logger.AddLog($"{uri} IMPLC Service {(result ? "Start!" : "Start Fail!!")}");
                 }
@@ -69,12 +84,12 @@ namespace IMPLC
             {
                 CanExecuteFunction = (param) =>
                 {
-                    return IsRunning;
+                    return _IsRunning;
                 },
 
                 ExecuteAction = (param) =>
                 {
-                    if (_Service == null || !IsRunning)
+                    if (_Service == null || !_IsRunning)
                     {
                         _Logger.AddLog("Service is not Started");
                         return;
@@ -82,7 +97,6 @@ namespace IMPLC
 
                     var result = _Service.Stop();
                     IsRunning = !result;
-                    OnServiceRunningChanged();
                     _Service = null;
 
                     _Logger.AddLog($"{ServiceUri} IMPLC Service {(result ? "Stop!" : "Stop Fail!!")}");
@@ -98,11 +112,7 @@ namespace IMPLC
         }
 
 
-        private void OnServiceRunningChanged()
-        {
-            _StartCommand.OnCanExecuteChanged();
-            _StopCommand.OnCanExecuteChanged();
-        }
+        
 
     }
 }

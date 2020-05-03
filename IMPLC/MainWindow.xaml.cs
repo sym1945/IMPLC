@@ -1,19 +1,4 @@
-﻿using IMPLC.Core;
-using IMPLC.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace IMPLC
 {
@@ -26,13 +11,15 @@ namespace IMPLC
         {
             InitializeComponent();
             DataContext = new MainViewModel();
+            Closing += MainWindow_Closing;
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var DeviceRepo = DeviceRepoManager.Instance;
-            DeviceRepo.AddDeviceBlock(eDevice.W, 10);
+            e.Cancel = true;
+            (DataContext as MainViewModel).IsHidding = true;
         }
+
 
     }
 }

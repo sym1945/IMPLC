@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IMPLC"
              mc:Ignorable="d" 
-             Background="Gray"
+             Background="White"
              d:DataContext="{d:DesignInstance local:DeviceSettingViewModel}"
              d:DesignHeight="600" d:DesignWidth="400">
     <Grid>
@@ -17,7 +17,7 @@
         <!-- Add Device Info -->
         <Grid
             Grid.Row="0"
-            Margin="15"
+            Margin="20 10"
             >
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -44,17 +44,21 @@
             <ComboBox
                 Grid.Row="1"
                 Grid.Column="0"
+                VerticalContentAlignment="Center"
                 ItemsSource="{Binding Devices}"
                 SelectedItem="{Binding SelectedDevice}"/>
 
             <TextBox
                 Grid.Row="1"
                 Grid.Column="1"
+                VerticalContentAlignment="Center"
                 Text="{Binding Length}"/>
 
             <Button 
                 Grid.Column="2"
+                Grid.Row="0"
                 Grid.RowSpan="2"
+                Margin="20 10 0 0"
                 Content="ADD"
                 Command="{Binding AddCommand}"/>
         </Grid>
@@ -72,11 +76,19 @@
                 x:Name="deviceBlocksListView"
                 SelectionMode="Multiple"
                 ItemsSource="{Binding DeviceBlocks}">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    </Style>
+                </ListView.Resources>
+
                 <ListView.View>
                     <GridView>
                         <GridView.Columns>
-                            <GridViewColumn Header="Device" DisplayMemberBinding="{Binding Device}"/>
-                            <GridViewColumn Header="Length" DisplayMemberBinding="{Binding Length}"/>
+                            <GridViewColumn Header="Device" DisplayMemberBinding="{Binding Device}" Width="60" />
+                            <GridViewColumn Header="Length" DisplayMemberBinding="{Binding Length}" Width="60" />
+                            <GridViewColumn Header="Start" DisplayMemberBinding="{Binding StartAddress}" Width="70" />
+                            <GridViewColumn Header="End" DisplayMemberBinding="{Binding EndAddress}" Width="70" />
                         </GridView.Columns>
                     </GridView>
                 </ListView.View>

@@ -42,8 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Flags.cs" />
+    <Compile Include="Helper\PLCDeviceHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\BitDeviceRepo.cs" />
+    <Compile Include="Repository\DeviceRepoFactory.cs" />
     <Compile Include="Repository\DeviceRepoManager.cs" />
     <Compile Include="Repository\IDeviceRepo.cs" />
     <Compile Include="Repository\WordDeviceRepo.cs" />

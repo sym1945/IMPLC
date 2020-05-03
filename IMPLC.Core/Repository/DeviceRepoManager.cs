@@ -65,31 +65,5 @@ namespace IMPLC.Core
 
     }
 
-
-
-    public class DeviceRepoFactory
-    {
-        public static bool IsBitDevice(eDevice device)
-        {
-            switch (device)
-            {
-                default:
-                    return false;
-                case eDevice.B:
-                case eDevice.M:
-                case eDevice.SB_Special_M:
-                case eDevice.L:
-                case eDevice.V:
-                    return true;
-            }
-        }
-
-        public static IDeviceRepo MakeDeviceRepo(eDevice device, short length)
-        {
-            if (IsBitDevice(device))
-                return new BitDeviceRepo(length);
-            else
-                return new WordDeviceRepo(length);
-        }
-    }
+    
 }

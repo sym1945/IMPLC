@@ -11,7 +11,7 @@ namespace IMPLC
 {
     public class DeviceSettingViewModel : ViewModelBase
     {
-        private DeviceRepoManager _DeviceRepo = DeviceRepoManager.Instance;
+        private readonly DeviceRepoManager _DeviceRepo = DeviceRepoManager.Instance;
 
         public IEnumerable<eDevice> Devices
         {
@@ -34,7 +34,7 @@ namespace IMPLC
             {
                 ExecuteAction = (param) =>
                 {
-                    if (Length < 0)
+                    if (Length <= 0)
                     {
                         OnWarningOccured(Resources.DEVICE_LENGTH_ERROR);
                         return;
@@ -79,8 +79,6 @@ namespace IMPLC
         {
             WarningOccured?.Invoke(message);
         }
-
-
 
 
     }

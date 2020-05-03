@@ -1,6 +1,7 @@
 ﻿using System.Collections.Specialized;
 using System.Windows.Controls;
 using System.Windows.Interactivity;
+using System.Windows.Media;
 
 namespace IMPLC
 {
@@ -24,8 +25,16 @@ namespace IMPLC
             if (e.Action == NotifyCollectionChangedAction.Add)
             {
                 // scroll the new item into view   
-                listBox.ScrollIntoView(e.NewItems[0]);
+                //listBox.ScrollIntoView(e.NewItems[0]);
+
+                if (VisualTreeHelper.GetChildrenCount(listBox) > 0)
+                {
+                    Border border = (Border)VisualTreeHelper.GetChild(listBox, 0);
+                    ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+                    scrollViewer.ScrollToBottom();
+                }
             }
         }
+
     }
 }

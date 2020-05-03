@@ -4,17 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMPLC"
+        xmlns:tb="http://www.hardcodet.net/taskbar"
         mc:Ignorable="d" 
         d:DataContext="{d:DesignInstance local:MainViewModel}"
+        Icon="{Binding ServiceViewModel.IsRunning, Converter={local:IconConverter}}"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Title="IMPLC" 
+        Title="{Binding Title}" 
         Height="600" 
-        Width="400">
+        Width="400"
+        local:WindowHideProperty.Value="{Binding IsHidding}">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="160"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
@@ -23,7 +27,7 @@
             x:Name="deviceSettingMenu"
             Grid.Row="1"
             Grid.RowSpan="2"
-            Margin="-400 0 400 0"
+            Margin="400 0 -400 0"
             Panel.ZIndex="1">
             <local:DeviceSetting.Style>
                 <Style TargetType="{x:Type local:DeviceSetting}">
@@ -46,7 +50,7 @@
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ThicknessAnimation
-                                            To="-400 0 400 0"
+                                            To="400 0 -400 0"
                                             Duration="0:0:0.5"
                                             DecelerationRatio="1"
                                             Storyboard.TargetProperty="Margin"/>
@@ -60,10 +64,17 @@
         </local:DeviceSetting>
 
         <!-- Menu bar -->
-        <Border Grid.Row="0">
-            <StackPanel Orientation="Horizontal">
-                <Button 
-                    Content="Device Setting"
+        <Border 
+            Grid.Row="0"
+            BorderBrush="{StaticResource ButtonBorderBrush}"
+            BorderThickness="0 0 0 1">
+            <StackPanel 
+                Margin="10 0"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                <Button
+                    Style="{StaticResource IconGrowButton}"
+                    Content="{StaticResource FontAwesomeSettingIcon}"
                     Command="{Binding ShowSettingMenuCommand}"/>
             </StackPanel>
         </Border>
@@ -98,16 +109,21 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
+                        VerticalAlignment="Center"
                         Text="Service Type"/>
 
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
+                        VerticalAlignment="Center"
                         Text="Root URI"/>
 
                     <ComboBox
                         Grid.Row="0"
                         Grid.Column="1"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        IsEnabled="{Binding IsRunning, Converter={local:ReverseBoolConverter}}"
                         ItemsSource="{Binding ServiceTypes}"
                         SelectedItem="{Binding SelectedServiceType}">
                     </ComboBox>
@@ -115,11 +131,15 @@
                     <TextBox 
                         Grid.Row="1"
                         Grid.Column="1"
+                        VerticalContentAlignment="Center"
+                        IsEnabled="{Binding IsRunning, Converter={local:ReverseBoolConverter}}"
                         Text="{Binding RootUri}"/>
                 </Grid>
 
                 <!-- Button -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="1"
+                      Margin="0 10 0 0"
+                      >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -127,12 +147,14 @@
 
                     <Button
                         Grid.Column="0"
+                        Margin="0 0 5 0"
                         Content="START"
                         Command="{Binding StartCommand}"
                         />
 
                     <Button 
                         Grid.Column="1"
+                        Margin="5 0 0 0"
                         Content="STOP"
                         Command="{Binding StopCommand}"
                         />
@@ -152,5 +174,29 @@
             <local:LogViewer />
 
         </GroupBox>
+        
+        <!-- Tray Icon -->
+        <tb:TaskbarIcon
+            IconSource="{Binding ServiceViewModel.IsRunning, Converter={local:IconConverter}}">
+            <tb:TaskbarIcon.TrayToolTip>
+                <Border 
+                    Padding="10 5"
+                    Background="White">
+                    <TextBlock Text="{Binding Title}"/>
+                </Border>
+            </tb:TaskbarIcon.TrayToolTip>
+            <tb:TaskbarIcon.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="START" Command="{Binding ServiceViewModel.StartCommand}"/>
+                    <MenuItem Header="STOP" Command="{Binding ServiceViewModel.StopCommand}"/>
+                    <Separator/>
+                    <MenuItem Header="SHOW" Command="{Binding ShowWindowCommand}" IsEnabled="{Binding IsHidding}" />
+                    <MenuItem Header="HIDE" Command="{Binding HideWindowCommand}" IsEnabled="{Binding IsHidding, Converter={local:ReverseBoolConverter}}"/>
+                    <MenuItem Header="EXIT" Command="{Binding ExitWindowCommand}"/>
+                </ContextMenu>
+                    
+            </tb:TaskbarIcon.ContextMenu>
+        </tb:TaskbarIcon>
+
     </Grid>
 </Window>
