@@ -7,6 +7,8 @@ namespace IMPLC.Core
     {
         private readonly short[] _Values;
 
+        public short Length => (short)_Values.Length;
+
         public WordDeviceRepo(short length)
         {
             if (length < 1)

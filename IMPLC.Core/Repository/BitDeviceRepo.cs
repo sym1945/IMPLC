@@ -6,6 +6,8 @@ namespace IMPLC.Core
     {
         private readonly bool[] _Values;
 
+        public short Length => (short)_Values.Length;
+
         public BitDeviceRepo(short length)
         {
             _Values = new bool[length];

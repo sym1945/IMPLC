@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IMPLC"
-        mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance local:ServiceViewModel}"
+        mc:Ignorable="d" 
+        d:DataContext="{d:DesignInstance local:MainViewModel}"
         ResizeMode="NoResize"
         Title="IMPLC" 
         Height="600" 
         Width="400">
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -17,10 +18,53 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <!-- Side Menu : Device Setting -->
+        <local:DeviceSetting 
+            x:Name="deviceSettingMenu"
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Margin="-400 0 400 0"
+            Panel.ZIndex="1">
+            <local:DeviceSetting.Style>
+                <Style TargetType="{x:Type local:DeviceSetting}">
+                    <Style.Triggers>
+                        <DataTrigger 
+                            Binding="{Binding DataContext.ShowSettingMenu, RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}" 
+                            Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation
+                                            To="0 0 0 0"
+                                            Duration="0:0:0.5"
+                                            DecelerationRatio="1"
+                                            Storyboard.TargetProperty="Margin"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ThicknessAnimation
+                                            To="-400 0 400 0"
+                                            Duration="0:0:0.5"
+                                            DecelerationRatio="1"
+                                            Storyboard.TargetProperty="Margin"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </local:DeviceSetting.Style>
+        </local:DeviceSetting>
+
         <!-- Menu bar -->
         <Border Grid.Row="0">
             <StackPanel Orientation="Horizontal">
-                <Button Content="Device Setting"/>
+                <Button 
+                    Content="Device Setting"
+                    Command="{Binding ShowSettingMenuCommand}"/>
             </StackPanel>
         </Border>
 
@@ -95,7 +139,7 @@
                 </Grid>
             </Grid>
         </GroupBox>
-        
+
         <!-- Log -->
         <GroupBox 
             Grid.Row="2"
@@ -104,9 +148,9 @@
             <GroupBox.Header>
                 <TextBlock Text="Log"/>
             </GroupBox.Header>
-            
+
             <local:LogViewer />
-            
+
         </GroupBox>
     </Grid>
 </Window>

@@ -23,6 +23,7 @@ namespace IMPLC
         public DeviceSetting()
         {
             InitializeComponent();
+            DataContext = new DeviceSettingViewModel();
         }
     }
 }

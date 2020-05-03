@@ -2,6 +2,8 @@
 {
     public interface IDeviceRepo
     {
+        short Length { get; }
+
         ErrorCode ReadDeviceBlock(eDevice device, short address, short length, out short[] readValues);
 
         ErrorCode WriteDeviceBlock(eDevice device, short address, short length, ref short[] writeValues);

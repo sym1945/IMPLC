@@ -4,9 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace IMPLC
@@ -29,8 +27,6 @@ namespace IMPLC
         public short Length { get; set; }
 
         public ObservableCollection<DeviceBlockViewModel> DeviceBlocks { get; private set; }
-
-        public DeviceBlockViewModel[] SelectedDeviceBlocks { get; set; }
 
         public ICommand AddCommand
         {
@@ -56,10 +52,10 @@ namespace IMPLC
             {
                 ExecuteAction = (param) =>
                 {
-                    if (SelectedDeviceBlocks == null)
+                    if (!(param is IList selectedItems))
                         return;
 
-                    foreach (var selectedDeviceBlock in SelectedDeviceBlocks)
+                    foreach (DeviceBlockViewModel selectedDeviceBlock in selectedItems.OfType<DeviceBlockViewModel>().ToList())
                     {
                         if (_DeviceRepo.RemoveDeviceBlock(selectedDeviceBlock.Device))
                             DeviceBlocks.Remove(selectedDeviceBlock);
@@ -73,7 +69,8 @@ namespace IMPLC
 
         public DeviceSettingViewModel()
         {
-            DeviceBlocks = new ObservableCollection<DeviceBlockViewModel>();
+            var managedDeviceBlocks = _DeviceRepo.Devices.Select(d => new DeviceBlockViewModel(d.Key, d.Value.Length));
+            DeviceBlocks = new ObservableCollection<DeviceBlockViewModel>(managedDeviceBlocks);
             SelectedDevice = Devices.FirstOrDefault();
         }
 

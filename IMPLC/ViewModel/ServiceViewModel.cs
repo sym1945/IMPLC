@@ -27,9 +27,13 @@ namespace IMPLC
 
         public PLCServiceType SelectedServiceType { get; set; }
 
+        
+
         public bool IsRunning { get; private set; }
 
         public string RootUri { get; set; }
+
+     
 
         public ICommand StartCommand
         {

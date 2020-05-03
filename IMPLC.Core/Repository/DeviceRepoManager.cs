@@ -13,6 +13,8 @@ namespace IMPLC.Core
 
         private readonly Dictionary<eDevice, IDeviceRepo> _Devices;
 
+        public IReadOnlyDictionary<eDevice, IDeviceRepo> Devices => _Devices;
+
         public DeviceRepoManager()
         {
             _Devices = new Dictionary<eDevice, IDeviceRepo>();
@@ -25,7 +27,7 @@ namespace IMPLC.Core
 
             _Devices.Add(device, DeviceRepoFactory.MakeDeviceRepo(device, length));
 
-            return false;
+            return true;
         }
 
         public bool RemoveDeviceBlock(eDevice device)

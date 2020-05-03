@@ -5,6 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:IMPLC"
              mc:Ignorable="d" 
+             Background="Gray"
+             d:DataContext="{d:DesignInstance local:DeviceSettingViewModel}"
              d:DesignHeight="600" d:DesignWidth="400">
     <Grid>
         <Grid.RowDefinitions>
@@ -41,17 +43,20 @@
 
             <ComboBox
                 Grid.Row="1"
-                Grid.Column="0"/>
+                Grid.Column="0"
+                ItemsSource="{Binding Devices}"
+                SelectedItem="{Binding SelectedDevice}"/>
 
             <TextBox
                 Grid.Row="1"
-                Grid.Column="1"/>
+                Grid.Column="1"
+                Text="{Binding Length}"/>
 
             <Button 
                 Grid.Column="2"
                 Grid.RowSpan="2"
                 Content="ADD"
-                />
+                Command="{Binding AddCommand}"/>
         </Grid>
         
         <!-- Added Devices -->
@@ -62,11 +67,28 @@
             <GroupBox.Header>
                 <TextBlock Text="Device List"/>
             </GroupBox.Header>
-            
-            <ListView
-                SelectionMode="Multiple">
 
+            <ListView
+                x:Name="deviceBlocksListView"
+                SelectionMode="Multiple"
+                ItemsSource="{Binding DeviceBlocks}">
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Device" DisplayMemberBinding="{Binding Device}"/>
+                            <GridViewColumn Header="Length" DisplayMemberBinding="{Binding Length}"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+
+                <ListView.InputBindings>
+                    <KeyBinding 
+                        Key="Delete" 
+                        Command="{Binding RemoveCommand}"
+                        CommandParameter="{Binding ElementName=deviceBlocksListView, Path=SelectedItems}"/>
+                </ListView.InputBindings>
             </ListView>
+
         </GroupBox>
 
     </Grid>
