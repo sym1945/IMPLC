@@ -11,16 +11,16 @@ namespace IMPLC.Core
             Instance = new DeviceRepoManager();
         }
 
-        private readonly Dictionary<eDevice, IDeviceRepo> _Devices;
+        private readonly Dictionary<Device, IDeviceRepo> _Devices;
 
-        public IReadOnlyDictionary<eDevice, IDeviceRepo> Devices => _Devices;
+        public IReadOnlyDictionary<Device, IDeviceRepo> Devices => _Devices;
 
         public DeviceRepoManager()
         {
-            _Devices = new Dictionary<eDevice, IDeviceRepo>();
+            _Devices = new Dictionary<Device, IDeviceRepo>();
         }
 
-        public bool AddDeviceBlock(eDevice device, short length)
+        public bool AddDeviceBlock(Device device, short length)
         {
             if (_Devices.ContainsKey(device))
                 return false;
@@ -30,7 +30,7 @@ namespace IMPLC.Core
             return true;
         }
 
-        public bool RemoveDeviceBlock(eDevice device)
+        public bool RemoveDeviceBlock(Device device)
         {
             if (!_Devices.ContainsKey(device))
                 return false;
@@ -38,7 +38,7 @@ namespace IMPLC.Core
             return _Devices.Remove(device);
         }
 
-        public ErrorCode ReadDeviceBlock(eDevice device, short address, short length, out short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, short address, short length, out short[] readValues)
         {
             readValues = null;
             if (!_Devices.TryGetValue(device, out IDeviceRepo deviceRepo))
@@ -47,7 +47,7 @@ namespace IMPLC.Core
             return deviceRepo.ReadDeviceBlock(device, address, length, out readValues);
         }
 
-        public ErrorCode WriteDeviceBlock(eDevice device, short address, short length, ref short[] writeValues)
+        public ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues)
         {
             if (!_Devices.TryGetValue(device, out IDeviceRepo deviceRepo))
                 return ErrorCode.DeviceIsNotExist;
@@ -55,7 +55,7 @@ namespace IMPLC.Core
             return deviceRepo.WriteDeviceBlock(device, address, length, ref writeValues);
         }
 
-        public ErrorCode WriteBit(eDevice device, short address, bool value)
+        public ErrorCode WriteBit(Device device, short address, bool value)
         {
             if (!_Devices.TryGetValue(device, out IDeviceRepo deviceRepo))
                 return ErrorCode.DeviceIsNotExist;

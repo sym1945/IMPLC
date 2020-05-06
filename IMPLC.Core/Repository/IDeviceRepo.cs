@@ -4,11 +4,11 @@
     {
         short Length { get; }
 
-        ErrorCode ReadDeviceBlock(eDevice device, short address, short length, out short[] readValues);
+        ErrorCode ReadDeviceBlock(Device device, short address, short length, out short[] readValues);
 
-        ErrorCode WriteDeviceBlock(eDevice device, short address, short length, ref short[] writeValues);
+        ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues);
 
-        ErrorCode WriteBit(eDevice device, short address, bool value);
+        ErrorCode WriteBit(Device device, short address, bool value);
 
     }
 }

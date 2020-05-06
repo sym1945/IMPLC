@@ -4,7 +4,7 @@ namespace IMPLC
 {
     public class DeviceBlockViewModel : ViewModelBase
     {
-        public eDevice Device { get; private set; }
+        public Device Device { get; private set; }
 
         public short Length { get; private set; }
 
@@ -12,7 +12,7 @@ namespace IMPLC
 
         public string EndAddress => Device.IsDecimalAddress() ? $"{Device}{Length}" : $"{Device}{Length - 1:X4}";
 
-        public DeviceBlockViewModel(eDevice device, short length)
+        public DeviceBlockViewModel(Device device, short length)
         {
             Device = device;
             Length = length;

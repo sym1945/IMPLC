@@ -48,6 +48,7 @@
     <Compile Include="IPLCServiceClient.cs" />
     <Compile Include="IPLCServiceObject.cs" />
     <Compile Include="IPC\PLCService.cs" />
+    <Compile Include="PLCServiceDeviceInfo.cs" />
     <Compile Include="PLCServiceProvider.cs" />
     <Compile Include="PLCServiceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,4 @@
-﻿using IMPLC.Core;
+﻿using System.Collections.Generic;
 
 namespace IMPLC.Service
 {
@@ -13,5 +13,7 @@ namespace IMPLC.Service
         short ReadBlock(short device, short deviceNo, short size, ref short[] buf);
 
         short SetBit(short device, short devno, bool set);
+
+        List<PLCServiceDeviceInfo> GetServiceDeviceInfo();
     }
 }

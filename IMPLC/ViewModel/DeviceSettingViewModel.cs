@@ -13,16 +13,16 @@ namespace IMPLC
     {
         private readonly DeviceRepoManager _DeviceRepo = DeviceRepoManager.Instance;
 
-        public IEnumerable<eDevice> Devices
+        public IEnumerable<Device> Devices
         {
-            get => new List<eDevice>
+            get => new List<Device>
             {
-                eDevice.B,
-                eDevice.W
+                Device.B,
+                Device.W
             };
         }
 
-        public eDevice SelectedDevice { get; set; }
+        public Device SelectedDevice { get; set; }
 
         public short Length { get; set; }
 

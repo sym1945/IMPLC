@@ -13,7 +13,7 @@ namespace IMPLC.Core
             _Values = new bool[length];
         }
 
-        public ErrorCode ReadDeviceBlock(eDevice device, short address, short length, out short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, short address, short length, out short[] readValues)
         {
             readValues = null;
             int totalLength = 16 * length;
@@ -41,7 +41,7 @@ namespace IMPLC.Core
             return ErrorCode.None;
         }
 
-        public ErrorCode WriteDeviceBlock(eDevice device, short address, short length, ref short[] writeValues)
+        public ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues)
         {
             int totalLength = 16 * length;
 
@@ -66,7 +66,7 @@ namespace IMPLC.Core
             return ErrorCode.None;
         }
 
-        public ErrorCode WriteBit(eDevice device, short address, bool value)
+        public ErrorCode WriteBit(Device device, short address, bool value)
         {
             if (address >= _Values.Length)
                 return ErrorCode.DeviceLengthLimitOver;
