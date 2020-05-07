@@ -38,13 +38,12 @@ namespace IMPLC.Core
             return _Devices.Remove(device);
         }
 
-        public ErrorCode ReadDeviceBlock(Device device, short address, short length, out short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues)
         {
-            readValues = null;
             if (!_Devices.TryGetValue(device, out IDeviceRepo deviceRepo))
                 return ErrorCode.DeviceIsNotExist;
 
-            return deviceRepo.ReadDeviceBlock(device, address, length, out readValues);
+            return deviceRepo.ReadDeviceBlock(device, address, length, ref readValues);
         }
 
         public ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues)

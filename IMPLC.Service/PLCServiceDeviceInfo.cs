@@ -1,7 +1,9 @@
 ﻿using IMPLC.Core;
+using System;
 
 namespace IMPLC.Service
 {
+    [Serializable]
     public class PLCServiceDeviceInfo
     {
         public Device Device { get; private set; }

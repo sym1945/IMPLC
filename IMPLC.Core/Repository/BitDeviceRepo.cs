@@ -13,53 +13,55 @@ namespace IMPLC.Core
             _Values = new bool[length];
         }
 
-        public ErrorCode ReadDeviceBlock(Device device, short address, short length, out short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues)
         {
-            readValues = null;
-            int totalLength = 16 * length;
+            if (readValues == null)
+                return ErrorCode.RefValueIsNull;
 
-            if (address + totalLength > _Values.Length)
+            if (readValues.Length != length)
+                return ErrorCode.RefValueLengthError;
+
+            if (address >= _Values.Length)
                 return ErrorCode.DeviceLengthLimitOver;
 
-            int pos = 0;
-            int s = 0;
-            var shortValues = new List<short>(length);
-            for (int i = address; i < address + totalLength; i++, pos++)
+            for (int i = 0; i < length; i++)
             {
-                if (_Values[i])
-                    s |= (1 << pos);
-
-                if (pos == 15)
+                int value = 0;
+                for (int pos = 0; pos < 16; pos++)
                 {
-                    shortValues.Add((short)s);
-                    s = 0;
-                    pos = -1;
+                    if (address >= _Values.Length)
+                        break;
+
+                    if (_Values[address++])
+                        value |= (1 << pos);
                 }
+
+                readValues[i] = (short)value;
             }
 
-            readValues = shortValues.ToArray();
             return ErrorCode.None;
         }
 
         public ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues)
         {
-            int totalLength = 16 * length;
-
-            if (address + totalLength > _Values.Length)
-                return ErrorCode.DeviceLengthLimitOver;
-
             if (writeValues == null)
-                return ErrorCode.WriteValueIsNull;
+                return ErrorCode.RefValueIsNull;
 
             if (writeValues.Length != length)
-                return ErrorCode.WriteValueLengthError;
+                return ErrorCode.RefValueLengthError;
+
+            if (address >= _Values.Length)
+                return ErrorCode.DeviceLengthLimitOver;
 
             for (int i = 0; i < length;  i++)
             {
-                var bitAddress = address + (i * 16);
-                for (int j = 0; j < 16; j++)
+                for (int pos = 0; pos < 16; pos++)
                 {
-                    _Values[bitAddress + j] = ((writeValues[i] >> j) & 1) == 1;
+                    address += (short)pos;
+                    if (address >= _Values.Length)
+                        break;
+
+                    _Values[address] = ((writeValues[i] >> pos) & 1) == 1;
                 }
             }
 

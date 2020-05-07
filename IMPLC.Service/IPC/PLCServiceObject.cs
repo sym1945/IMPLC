@@ -30,7 +30,7 @@ namespace IMPLC.Service.IPC
 
         public short ReadBlock(short device, short deviceNo, short size, ref short[] buf)
         {
-            return (short)_DeviceRepo.ReadDeviceBlock((Device)device, deviceNo, size, out buf);
+            return (short)_DeviceRepo.ReadDeviceBlock((Device)device, deviceNo, size, ref buf);
         }
 
         public short SetBit(short device, short devno, bool set)

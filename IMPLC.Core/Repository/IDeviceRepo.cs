@@ -4,7 +4,7 @@
     {
         short Length { get; }
 
-        ErrorCode ReadDeviceBlock(Device device, short address, short length, out short[] readValues);
+        ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues);
 
         ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues);
 

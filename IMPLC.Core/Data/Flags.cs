@@ -45,9 +45,9 @@ namespace IMPLC.Core
     { 
         None = 0,
         DeviceIsNotExist = 1,
-        DeviceLengthLimitOver = 2,
-        WriteValueIsNull = 3,
-        WriteValueLengthError = 4,
+        DeviceLengthLimitOver = 2,        
+        RefValueIsNull = 4,
+        RefValueLengthError = 5,
         NotSupported = 99,
 
     }

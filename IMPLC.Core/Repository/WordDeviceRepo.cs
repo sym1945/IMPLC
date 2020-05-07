@@ -17,14 +17,23 @@ namespace IMPLC.Core
             _Values = new short[length];
         }
 
-        public ErrorCode ReadDeviceBlock(Device device, short address, short length, out short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues)
         {
-            readValues = null;
-
             if (address + length > _Values.Length)
                 return ErrorCode.DeviceLengthLimitOver;
 
-            readValues = _Values.Skip(address).Take(length).ToArray();
+            if (readValues == null)
+                return ErrorCode.RefValueIsNull;
+
+            if (readValues.Length != length)
+                return ErrorCode.RefValueLengthError;
+
+
+            int j = 0;
+            for (int i = address; i < address + length; i++)
+            {
+                readValues[j++] = _Values[i];
+            }
 
             return ErrorCode.None;
         }
@@ -35,10 +44,10 @@ namespace IMPLC.Core
                 return ErrorCode.DeviceLengthLimitOver;
 
             if (writeValues == null)
-                return ErrorCode.WriteValueIsNull;
+                return ErrorCode.RefValueIsNull;
 
             if (writeValues.Length != length)
-                return ErrorCode.WriteValueLengthError;
+                return ErrorCode.RefValueLengthError;
 
             Array.Copy(writeValues, 0, _Values, address, length);
 
