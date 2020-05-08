@@ -29,10 +29,9 @@ namespace IMPLC.Core
                 return ErrorCode.RefValueLengthError;
 
 
-            int j = 0;
-            for (int i = address; i < address + length; i++)
+            for (int i = 0; i < length; i++)
             {
-                readValues[j++] = _Values[i];
+                readValues[i] = _Values[address + i];
             }
 
             return ErrorCode.None;
