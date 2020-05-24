@@ -1,4 +1,5 @@
-﻿using System.Runtime.Remoting;
+﻿using System;
+using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels;
 using System.Runtime.Remoting.Channels.Ipc;
 
@@ -23,15 +24,17 @@ namespace IMPLC.Service.IPC
                     typeof(PLCServiceObject)
                     , $@"{rootUri}/{nameof(PLCServiceObject)}.rem");
 
-                RemotingConfiguration.RegisterWellKnownClientType(remoteType);
+                if (RemotingConfiguration.IsWellKnownClientType(remoteType.ObjectType) == null)
+                    RemotingConfiguration.RegisterWellKnownClientType(remoteType);
 
                 IPLCServiceObject serviceObject = new PLCServiceObject();
                 serviceObject.Open();
 
                 return serviceObject;
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
                 return null;
             }
         }

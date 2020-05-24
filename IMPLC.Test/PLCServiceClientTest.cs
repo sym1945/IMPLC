@@ -23,5 +23,17 @@ namespace IMPLC.Test
             Assert.AreEqual(1, readValue[0]);
 
         }
+
+        [TestMethod]
+        public void IPCDisconnect()
+        {
+            var client = PLCServiceProvider.GetServiceClient(PLCServiceType.IPC);
+
+            client.Connect("ipc://localhost:9090");
+            client.Disconnect();
+            var serviceObject = client.Connect("ipc://localhost:9090");
+
+            Assert.IsNotNull(serviceObject);
+        }
     }
 }
