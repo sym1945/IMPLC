@@ -80,6 +80,7 @@
       <DependentUpon>LogViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\Base\ConverterBase.cs" />
+    <Compile Include="Converter\DeviceLengthConverter.cs" />
     <Compile Include="Converter\IconConverter.cs" />
     <Compile Include="Converter\ReverseBoolConverter.cs" />
     <Compile Include="ViewModel\Base\CommandBase.cs" />

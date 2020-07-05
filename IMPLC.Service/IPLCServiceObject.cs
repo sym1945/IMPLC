@@ -4,15 +4,15 @@ namespace IMPLC.Service
 {
     public interface IPLCServiceObject
     {
-        short Open();
+        int Open();
 
-        short Close();
+        int Close();
 
-        short WriteBlock(short device, short deviceNo, short size, ref short[] buf);
+        int WriteBlock(int device, int deviceNo, int size, ref short[] buf);
 
-        short ReadBlock(short device, short deviceNo, short size, ref short[] buf);
+        int ReadBlock(int device, int deviceNo, int size, ref short[] buf);
 
-        short SetBit(short device, short devno, bool set);
+        int SetBit(int device, int devno, bool set);
 
         List<PLCServiceDeviceInfo> GetServiceDeviceInfo();
     }

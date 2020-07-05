@@ -7,9 +7,9 @@ namespace IMPLC.Core
     {
         private readonly short[] _Values;
 
-        public short Length => (short)_Values.Length;
+        public int Length => _Values.Length;
 
-        public WordDeviceRepo(short length)
+        public WordDeviceRepo(int length)
         {
             if (length < 1)
                 throw new Exception("length must be bigger then 0");
@@ -17,7 +17,7 @@ namespace IMPLC.Core
             _Values = new short[length];
         }
 
-        public ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, int address, int length, ref short[] readValues)
         {
             if (address + length > _Values.Length)
                 return ErrorCode.DeviceLengthLimitOver;
@@ -37,7 +37,7 @@ namespace IMPLC.Core
             return ErrorCode.None;
         }
 
-        public ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues)
+        public ErrorCode WriteDeviceBlock(Device device, int address, int length, ref short[] writeValues)
         {
             if (address + length > _Values.Length)
                 return ErrorCode.DeviceLengthLimitOver;
@@ -53,7 +53,7 @@ namespace IMPLC.Core
             return ErrorCode.None;
         }
 
-        public ErrorCode WriteBit(Device device, short address, bool value)
+        public ErrorCode WriteBit(Device device, int address, bool value)
         {
             if (address >= _Values.Length)
                 return ErrorCode.DeviceLengthLimitOver;

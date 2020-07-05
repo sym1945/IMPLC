@@ -6,14 +6,14 @@ namespace IMPLC.Core
     {
         private readonly bool[] _Values;
 
-        public short Length => (short)_Values.Length;
+        public int Length => _Values.Length;
 
-        public BitDeviceRepo(short length)
+        public BitDeviceRepo(int length)
         {
             _Values = new bool[length];
         }
 
-        public ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, int address, int length, ref short[] readValues)
         {
             if (readValues == null)
                 return ErrorCode.RefValueIsNull;
@@ -42,7 +42,7 @@ namespace IMPLC.Core
             return ErrorCode.None;
         }
 
-        public ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues)
+        public ErrorCode WriteDeviceBlock(Device device, int address, int length, ref short[] writeValues)
         {
             if (writeValues == null)
                 return ErrorCode.RefValueIsNull;
@@ -57,7 +57,7 @@ namespace IMPLC.Core
             {
                 for (int pos = 0; pos < 16; pos++)
                 {
-                    address += (short)pos;
+                    address += pos;
                     if (address >= _Values.Length)
                         break;
 
@@ -68,7 +68,7 @@ namespace IMPLC.Core
             return ErrorCode.None;
         }
 
-        public ErrorCode WriteBit(Device device, short address, bool value)
+        public ErrorCode WriteBit(Device device, int address, bool value)
         {
             if (address >= _Values.Length)
                 return ErrorCode.DeviceLengthLimitOver;

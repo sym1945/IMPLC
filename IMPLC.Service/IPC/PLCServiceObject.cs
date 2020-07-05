@@ -13,29 +13,29 @@ namespace IMPLC.Service.IPC
         { 
         }
 
-        public short Open()
+        public int Open()
         {
             return 0;
         }
 
-        public short Close()
+        public int Close()
         {
             return 0;
         }
 
-        public short WriteBlock(short device, short deviceNo, short size, ref short[] buf)
+        public int WriteBlock(int device, int deviceNo, int size, ref short[] buf)
         {
-            return (short)_DeviceRepo.WriteDeviceBlock((Device)device, deviceNo, size, ref buf);
+            return (int)_DeviceRepo.WriteDeviceBlock((Device)device, deviceNo, size, ref buf);
         }
 
-        public short ReadBlock(short device, short deviceNo, short size, ref short[] buf)
+        public int ReadBlock(int device, int deviceNo, int size, ref short[] buf)
         {
-            return (short)_DeviceRepo.ReadDeviceBlock((Device)device, deviceNo, size, ref buf);
+            return (int)_DeviceRepo.ReadDeviceBlock((Device)device, deviceNo, size, ref buf);
         }
 
-        public short SetBit(short device, short devno, bool set)
+        public int SetBit(int device, int devno, bool set)
         {
-            return (short)_DeviceRepo.WriteBit((Device)device, devno, set);
+            return (int)_DeviceRepo.WriteBit((Device)device, devno, set);
         }
 
         public List<PLCServiceDeviceInfo> GetServiceDeviceInfo()

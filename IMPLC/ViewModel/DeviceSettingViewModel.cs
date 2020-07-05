@@ -11,7 +11,12 @@ namespace IMPLC
 {
     public class DeviceSettingViewModel : ViewModelBase
     {
+        private const int MAX_DEVICE_LENGTH = 0x1FFFF;
+
         private readonly DeviceRepoManager _DeviceRepo = DeviceRepoManager.Instance;
+
+        private int _LastAddress = MAX_DEVICE_LENGTH;
+
 
         public IEnumerable<Device> Devices
         {
@@ -24,7 +29,27 @@ namespace IMPLC
 
         public Device SelectedDevice { get; set; }
 
-        public short Length { get; set; }
+        public int LastAddress
+        {
+            get => _LastAddress;
+            set
+            {
+                if (_LastAddress == value)
+                    return;
+                if (value > MAX_DEVICE_LENGTH)
+                    _LastAddress = MAX_DEVICE_LENGTH;
+                else
+                    _LastAddress = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        public int Length
+        {
+            get => _LastAddress + 1;
+        }
+
 
         public ObservableCollection<DeviceBlockViewModel> DeviceBlocks { get; private set; }
 

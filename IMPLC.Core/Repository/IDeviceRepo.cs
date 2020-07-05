@@ -2,13 +2,13 @@
 {
     public interface IDeviceRepo
     {
-        short Length { get; }
+        int Length { get; }
 
-        ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues);
+        ErrorCode ReadDeviceBlock(Device device, int address, int length, ref short[] readValues);
 
-        ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues);
+        ErrorCode WriteDeviceBlock(Device device, int address, int length, ref short[] writeValues);
 
-        ErrorCode WriteBit(Device device, short address, bool value);
+        ErrorCode WriteBit(Device device, int address, bool value);
 
     }
 }

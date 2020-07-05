@@ -8,9 +8,9 @@ namespace IMPLC.Service
     {
         public Device Device { get; private set; }
 
-        public short Length { get; private set; }
+        public int Length { get; private set; }
 
-        public PLCServiceDeviceInfo(Device device, short length)
+        public PLCServiceDeviceInfo(Device device, int length)
         {
             Device = device;
             Length = length;

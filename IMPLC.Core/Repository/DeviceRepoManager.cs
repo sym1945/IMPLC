@@ -20,7 +20,7 @@ namespace IMPLC.Core
             _Devices = new Dictionary<Device, IDeviceRepo>();
         }
 
-        public bool AddDeviceBlock(Device device, short length)
+        public bool AddDeviceBlock(Device device, int length)
         {
             if (_Devices.ContainsKey(device))
                 return false;
@@ -38,7 +38,7 @@ namespace IMPLC.Core
             return _Devices.Remove(device);
         }
 
-        public ErrorCode ReadDeviceBlock(Device device, short address, short length, ref short[] readValues)
+        public ErrorCode ReadDeviceBlock(Device device, int address, int length, ref short[] readValues)
         {
             if (!_Devices.TryGetValue(device, out IDeviceRepo deviceRepo))
                 return ErrorCode.DeviceIsNotExist;
@@ -46,7 +46,7 @@ namespace IMPLC.Core
             return deviceRepo.ReadDeviceBlock(device, address, length, ref readValues);
         }
 
-        public ErrorCode WriteDeviceBlock(Device device, short address, short length, ref short[] writeValues)
+        public ErrorCode WriteDeviceBlock(Device device, int address, int length, ref short[] writeValues)
         {
             if (!_Devices.TryGetValue(device, out IDeviceRepo deviceRepo))
                 return ErrorCode.DeviceIsNotExist;
@@ -54,7 +54,7 @@ namespace IMPLC.Core
             return deviceRepo.WriteDeviceBlock(device, address, length, ref writeValues);
         }
 
-        public ErrorCode WriteBit(Device device, short address, bool value)
+        public ErrorCode WriteBit(Device device, int address, bool value)
         {
             if (!_Devices.TryGetValue(device, out IDeviceRepo deviceRepo))
                 return ErrorCode.DeviceIsNotExist;
